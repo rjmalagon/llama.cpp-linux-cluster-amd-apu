@@ -7,14 +7,14 @@ RUN apt update && apt install -y git build-essential cmake wget xz-utils
 
 # Install SSL and Vulkan SDK dependencies
 RUN apt install -y libssl-dev curl \
-    libxcb-xinput0 libxcb-xinerama0 libxcb-cursor-dev libvulkan-dev glslc spirv-headers
+    libxcb-xinput0 libxcb-xinerama0 libxcb-cursor-dev libvulkan-dev glslc spirv-headers libibverbs-dev
 
 # Build it
 WORKDIR /app
 
 COPY . .
 
-RUN cmake -B build -DGGML_NATIVE=OFF -DGGML_VULKAN=ON -DLLAMA_BUILD_TESTS=OFF -DGGML_BACKEND_DL=ON -DGGML_CPU_ALL_VARIANTS=ON && \
+RUN cmake -B build -DGGML_NATIVE=OFF -DGGML_RPC=ON -DGGML_VULKAN=ON -DLLAMA_BUILD_TESTS=OFF -DGGML_BACKEND_DL=ON -DGGML_CPU_ALL_VARIANTS=ON && \
     cmake --build build --config Release -j$(nproc)
 
 RUN mkdir -p /app/lib && \
