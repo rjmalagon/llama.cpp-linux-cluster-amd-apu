@@ -26,13 +26,14 @@ RUN mkdir -p /app/full \
     && cp -r gguf-py /app/full \
     && cp -r requirements /app/full \
     && cp requirements.txt /app/full \
-    && cp .devops/tools.sh /app/full/tools.sh
+    && cp .devops/tools.sh /app/full/tools.sh \
+    && sed -i '19 a\elif [[ "$arg1" == '\''--rpc'\'' || "$arg1" == '\''-n'\'' ]]; then\n    exec ./rpc-server "$@"' /app/full/tools.sh
 
 ## Base image
 FROM ubuntu:$UBUNTU_VERSION AS base
 
 RUN apt-get update \
-    && apt-get install -y libgomp1 curl libvulkan1 mesa-vulkan-drivers \
+    && apt-get install -y libgomp1 curl libvulkan1 mesa-vulkan-drivers libibverbs1 \
     libglvnd0 libgl1 libglx0 libegl1 libgles2 \
     && apt autoremove -y \
     && apt clean -y \

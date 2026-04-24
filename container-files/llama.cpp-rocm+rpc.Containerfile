@@ -1,8 +1,8 @@
 ARG UBUNTU_VERSION=24.04
 
 # This needs to generally match the container host's environment.
-ARG ROCM_VERSION=7.2.1
-ARG AMDGPU_VERSION=7.2.1
+ARG ROCM_VERSION=7.2.2
+ARG AMDGPU_VERSION=7.2.2
 
 # Target the ROCm build image
 ARG BASE_ROCM_DEV_CONTAINER=rocm/dev-ubuntu-${UBUNTU_VERSION}:${ROCM_VERSION}-complete
@@ -53,13 +53,15 @@ RUN mkdir -p /app/full \
     && cp -r gguf-py /app/full \
     && cp -r requirements /app/full \
     && cp requirements.txt /app/full \
-    && cp .devops/tools.sh /app/full/tools.sh
+    && cp .devops/tools.sh /app/full/tools.sh \
+    && sed -i '19 a\elif [[ "$arg1" == '\''--rpc'\'' || "$arg1" == '\''-n'\'' ]]; then\n    exec ./rpc-server "$@"' /app/full/tools.sh
+
 
 ## Base image
 FROM ${BASE_ROCM_DEV_CONTAINER} AS base
 
 RUN apt-get update \
-    && apt-get install -y libgomp1 curl \
+    && apt-get install -y libgomp1 curl libibverbs1 \
     && apt autoremove -y \
     && apt clean -y \
     && rm -rf /tmp/* /var/tmp/* \
