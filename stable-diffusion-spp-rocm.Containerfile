@@ -18,7 +18,7 @@ COPY stable-diffusion.cpp/ .
 #RUN cmake . -B ./build -DSD_VULKAN=ON
 #RUN cmake --build ./build --config Release --parallel
 RUN HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" \
-    cmake -S . -B /build -DSD_HIPBLAS=ON \
+    cmake -S . -B ./build -DSD_HIPBLAS=ON \
         -DGGML_HIP=ON \
         -DGGML_HIP_ROCWMMA_FATTN=ON \
         -DAMDGPU_TARGETS="$ROCM_DOCKER_ARCH" \
