@@ -37,7 +37,7 @@ RUN apt-get update \
 
 WORKDIR /app
 
-COPY ../llama.cpp/ .
+COPY . .
 
 RUN HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" \
     cmake -S . -B build \

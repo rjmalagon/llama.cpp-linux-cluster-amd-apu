@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
 
 WORKDIR /sd.cpp
 
-COPY ./stable-diffusion.cpp/ .
+COPY . .
 
 RUN cmake . -B ./build -DSD_VULKAN=ON
 RUN cmake --build ./build --config Release --parallel
