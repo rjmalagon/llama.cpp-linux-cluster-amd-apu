@@ -1,7 +1,5 @@
 FROM ghcr.io/rjmalagon/stable-diffusion.cpp:master-rocm AS sd
-ARG BASE_IMAGE=ghcr.io/rjmalagon/llama.cpp-linux-cluster-amd-apu
-ARG BASE_TAG=rocm-latest
-FROM ${BASE_IMAGE}:${BASE_TAG}
+FROM ghcr.io/rjmalagon/llama.cpp-linux-cluster-amd-apu:rocm-latest
 
 # has to be after the FROM
 # TARGETARCH is auto-set by `docker buildx build --platform …` (amd64/arm64);

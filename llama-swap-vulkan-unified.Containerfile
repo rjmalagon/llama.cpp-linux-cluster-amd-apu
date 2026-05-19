@@ -31,7 +31,7 @@ WORKDIR /build
 
 # ──
 
-FROM ubuntu:24.04 AS builder-base-vulkan
+FROM ubuntu:26.04 AS builder-base-vulkan
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CCACHE_DIR=/ccache
@@ -127,7 +127,7 @@ COPY --from=builder-base-cuda /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/
 
 # ──
 
-FROM ubuntu:24.04 AS runtime-vulkan
+FROM ubuntu:26.04 AS runtime-vulkan
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH="/usr/local/bin:${PATH}"
@@ -189,7 +189,7 @@ COPY --from=llama-swap-download /install/llama-swap-version /tmp/
 
 RUN ldconfig
 
-COPY config.example.yaml /etc/llama-swap/config/config.yaml
+COPY llama-swap/docker/unified/config.example.yaml /etc/llama-swap/config/config.yaml
 
 # Version tracking
 RUN echo "llama.cpp: ${LLAMA_COMMIT_HASH}" > /versions.txt && \
