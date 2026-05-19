@@ -1,9 +1,9 @@
 [submodule "llama.cpp"]
 	path = llama.cpp
 	url = git@github.com:ggml-org/llama.cpp.git
-[submodule "stable-diffusion.cpp"]
-	path = stable-diffusion.cpp
-	url = git@github.com:leejet/stable-diffusion.cpp.git
 [submodule "llama-swap"]
 	path = llama-swap
 	url = https://github.com/mostlygeek/llama-swap.git
+[submodule "stable-diffusion.cpp"]
+	path = stable-diffusion.cpp
+	url = https://github.com/leejet/stable-diffusion.cpp.git
