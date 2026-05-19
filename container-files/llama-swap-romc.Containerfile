@@ -7,7 +7,7 @@ FROM ${BASE_IMAGE}:${BASE_TAG}
 # TARGETARCH is auto-set by `docker buildx build --platform …` (amd64/arm64);
 # falls back to amd64 when an older `docker build` runs without buildx.
 ARG TARGETARCH=amd64
-ARG LS_VER=170
+ARG LS_VER=216
 ARG LS_REPO=mostlygeek/llama-swap
 
 # Set default UID/GID arguments
