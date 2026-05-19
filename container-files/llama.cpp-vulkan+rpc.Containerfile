@@ -12,7 +12,7 @@ RUN apt install -y libssl-dev curl \
 # Build it
 WORKDIR /app
 
-COPY . .
+COPY ../llama.cpp/ .
 
 RUN cmake -B build -DGGML_NATIVE=OFF -DGGML_RPC=ON -DGGML_VULKAN=ON -DLLAMA_BUILD_TESTS=OFF -DGGML_BACKEND_DL=ON -DGGML_CPU_ALL_VARIANTS=ON && \
     cmake --build build --config Release -j$(nproc)
