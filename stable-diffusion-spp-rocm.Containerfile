@@ -18,13 +18,13 @@ COPY stable-diffusion.cpp/ .
 #RUN cmake . -B ./build -DSD_VULKAN=ON
 #RUN cmake --build ./build --config Release --parallel
 RUN HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" \
-    cmake -S . -B ./build -DSD_HIPBLAS=ON \
-        -DGGML_HIP=ON \
-        -DGGML_HIP_ROCWMMA_FATTN=ON \
+    cmake . -B ./build -DSD_HIPBLAS=ON \
+        -DGGML_HIP=ON -DBUILD_SHARED_LIBS=OFF \
+        -DGGML_HIP_ROCWMMA_FATTN=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DAMDGPU_TARGETS="$ROCM_DOCKER_ARCH" \
         -DGGML_BACKEND_DL=OFF -DGGML_CPU_ALL_VARIANTS=OFF \
-        -DCMAKE_BUILD_TYPE=Release -DLLAMA_BUILD_TESTS=OFF \
-    && cmake --build build --config Release -j$(nproc)
+        -DCMAKE_BUILD_TYPE=Release  \
+    && cmake --build ./build --config Release -j$(nproc)
 
 
 FROM ${BASE_ROCM_DEV_CONTAINER} AS runtime
