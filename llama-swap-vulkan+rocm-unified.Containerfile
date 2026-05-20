@@ -69,7 +69,7 @@ ARG SD_COMMIT_HASH=master
 COPY scripts/llama-swap/docker/install-sd-romc.sh /build/
 RUN --mount=type=cache,id=ccache-${BACKEND},target=/ccache \
     --mount=type=cache,id=sd-${BACKEND},target=/src/stable-diffusion.cpp/build \
-    BACKEND=${BACKEND} bash /build/install-sd.sh "${SD_COMMIT_HASH}"
+    BACKEND=${BACKEND} bash /build/install-sd-romc.sh "${SD_COMMIT_HASH}"
 
 # ── Build llama.cpp (slowest build, run last) ─────────────────────────
 
@@ -79,7 +79,7 @@ ARG LLAMA_COMMIT_HASH=master
 COPY scripts/llama-swap/docker/install-llama-romc.sh /build/
 RUN --mount=type=cache,id=ccache-${BACKEND},target=/ccache \
     --mount=type=cache,id=llama-${BACKEND},target=/src/llama.cpp/build \
-    BACKEND=${BACKEND} bash /build/install-llama.sh "${LLAMA_COMMIT_HASH}"
+    BACKEND=${BACKEND} bash /build/install-llama-romc.sh "${LLAMA_COMMIT_HASH}"
 
 # ── Build ik_llama.cpp (CUDA only) ────────────────────────────────────
 #
