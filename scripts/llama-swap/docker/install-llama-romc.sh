@@ -41,7 +41,11 @@ elif [ "$BACKEND" = "vulkan" ]; then
     CMAKE_FLAGS+=(
         -DGGML_CUDA=OFF
         -DGGML_VULKAN=ON
-        -DGGML_RPC=ON 
+        -DGGML_RPC=ON
+        -DGGML_HIP=ON
+        -DGGML_HIP_ROCWMMA_FATTN=ON
+        -DAMDGPU_TARGETS='gfx908;gfx90a;gfx942;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1150;gfx1200;gfx1201'
+        -DLLAMA_BUILD_TESTS=OFF
     )
 fi
 
@@ -50,7 +54,7 @@ TARGETS=(llama-cli llama-server)
 rm -rf build/CMakeCache.txt build/CMakeFiles 2>/dev/null || true
 
 echo "=== Building llama.cpp for ${BACKEND} ==="
-cmake -B build "${CMAKE_FLAGS[@]}"
+HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" cmake -B build "${CMAKE_FLAGS[@]}"
 cmake --build build --config Release -j"$(nproc)" --target "${TARGETS[@]}"
 
 for bin in "${TARGETS[@]}"; do
