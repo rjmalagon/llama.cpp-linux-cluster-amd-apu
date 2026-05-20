@@ -41,15 +41,16 @@ if [ "$BACKEND" = "cuda" ]; then
     )
 elif [ "$BACKEND" = "vulkan" ]; then
     CMAKE_FLAGS+=(
-        -DSD_HIPBLAS=ON 
+        -DSD_HIPBLAS=ON
+        -DGGML_VULKAN=OFF 
         -DGGML_CUDA=OFF
         -DGGML_HIP=ON
         -DBUILD_SHARED_LIBS=OFF
         -DGGML_HIP_ROCWMMA_FATTN=ON
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON
         -DAMDGPU_TARGETS='gfx908;gfx90a;gfx942;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1150;gfx1200;gfx1201'
-        -DGGML_BACKEND_DL=OFF
-        -DGGML_CPU_ALL_VARIANTS=OFF
+        -DGGML_BACKEND_DL=ON
+        -DGGML_CPU_ALL_VARIANTS=ON
         )
 fi
 
