@@ -66,7 +66,7 @@ RUN --mount=type=cache,id=ccache-${BACKEND},target=/ccache \
 FROM builder-base AS sd-build
 ARG BACKEND=cuda
 ARG SD_COMMIT_HASH=master
-COPY llama-swap/docker/unified/install-sd-romc.sh /build/
+COPY scripts/llama-swap/docker/install-sd-romc.sh /build/
 RUN --mount=type=cache,id=ccache-${BACKEND},target=/ccache \
     --mount=type=cache,id=sd-${BACKEND},target=/src/stable-diffusion.cpp/build \
     BACKEND=${BACKEND} bash /build/install-sd.sh "${SD_COMMIT_HASH}"
