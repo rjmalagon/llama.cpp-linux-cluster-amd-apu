@@ -134,7 +134,7 @@ ENV PATH="/usr/local/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 libvulkan1 mesa-vulkan-drivers \
-    python3 curl ca-certificates libibverbs1 \
+    python3 curl ca-certificates libibverbs1 ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # ── Select runtime base by BACKEND ────────────────────────────────────
