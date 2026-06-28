@@ -44,6 +44,7 @@ elif [ "$BACKEND" = "vulkan" ]; then
         -DGGML_CUDA=OFF
         -DGGML_VULKAN=ON
         -DSD_VULKAN=ON
+        -DSD_RPC=ON
     )
 fi
 

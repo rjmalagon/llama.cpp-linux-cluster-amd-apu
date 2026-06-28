@@ -41,6 +41,7 @@ if [ "$BACKEND" = "cuda" ]; then
     )
 elif [ "$BACKEND" = "vulkan" ]; then
     CMAKE_FLAGS+=(
+        -DSD_RPC=ON
         -DSD_HIPBLAS=ON
         -DGGML_VULKAN=OFF
         -DGGML_CUDA=OFF
