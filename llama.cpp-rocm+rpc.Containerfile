@@ -41,7 +41,7 @@ COPY llama.cpp/ .
 
 RUN HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" \
     cmake -S . -B build \
-        -DGGML_HIP=ON -DGGML_RPC=ON \
+        -DGGML_HIP=ON -DGGML_RPC=ON -DCMAKE_CXX_FLAGS=-DGGML_MAX_NAME=128 -DCMAKE_C_FLAGS=-DGGML_MAX_NAME=128  \
         -DGGML_HIP_ROCWMMA_FATTN=ON \
         -DAMDGPU_TARGETS="$ROCM_DOCKER_ARCH" \
         -DGGML_BACKEND_DL=ON -DGGML_CPU_ALL_VARIANTS=ON \
