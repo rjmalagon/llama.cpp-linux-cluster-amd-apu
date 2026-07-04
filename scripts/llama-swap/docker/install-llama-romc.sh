@@ -44,7 +44,8 @@ elif [ "$BACKEND" = "vulkan" ]; then
         -DGGML_RPC=ON
         -DGGML_HIP=ON
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-        -DGGML_HIP_ROCWMMA_FATTN=ON
+        -DGGML_HIP_ROCWMMA_FATTN=OFF
+        -DGGML_CUDA_FA_ALL_QUANTS=1
         -DAMDGPU_TARGETS='gfx908;gfx90a;gfx942;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1150;gfx1200;gfx1201'
         -DLLAMA_BUILD_TESTS=OFF
     )
