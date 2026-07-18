@@ -31,7 +31,7 @@ WORKDIR /build
 
 # ──
 
-FROM docker.io/rocm/dev-ubuntu-24.04:7.2.4-complete AS builder-base-vulkan
+FROM docker.io/rocm/dev-ubuntu-24.04:7.14.0-full AS builder-base-vulkan
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CCACHE_DIR=/ccache
@@ -41,7 +41,7 @@ ENV PATH="/usr/lib/ccache:${PATH}"
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential cmake git python3 python3-pip libssl-dev \
     curl ca-certificates ccache make wget software-properties-common libgomp1 curl \
-    libvulkan-dev glslang-tools spirv-tools vulkan-validationlayers glslc \
+    libvulkan-dev glslang-tools spirv-tools vulkan-validationlayers glslc ffmpeg \
     spirv-headers libibverbs-dev \
     && rm -rf /var/lib/apt/lists/*
 
