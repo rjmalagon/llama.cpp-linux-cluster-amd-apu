@@ -9,12 +9,12 @@ FROM docker.io/node:$NODE_VERSION AS web
 
 ARG APP_VERSION
 
-WORKDIR /app/tools/ui
+WORKDIR llama.cpp/app/tools/ui
 
-COPY tools/ui/package.json tools/ui/package-lock.json ./
+COPY llama.cpp/tools/ui/package.json llama.cpp/tools/ui/package-lock.json ./
 RUN npm ci
 
-COPY tools/ui/ ./
+COPY llama.cpp/tools/ui/ ./
 RUN LLAMA_BUILD_NUMBER="$APP_VERSION" npm run build
 
 FROM docker.io/ubuntu:$UBUNTU_VERSION AS build
@@ -29,7 +29,7 @@ RUN apt install -y libssl-dev curl \
 # Build it
 WORKDIR /app
 
-COPY . .
+COPY llama.cpp .
 
 COPY --from=web /app/tools/ui/dist tools/ui/dist
 

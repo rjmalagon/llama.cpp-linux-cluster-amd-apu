@@ -19,10 +19,10 @@ ARG APP_VERSION
 
 WORKDIR /app/tools/ui
 
-COPY tools/ui/package.json tools/ui/package-lock.json ./
+COPY llama.cpp/tools/ui/package.json llama.cpp/tools/ui/package-lock.json ./
 RUN npm ci
 
-COPY tools/ui/ ./
+COPY llama.cpp/tools/ui/ ./
 RUN LLAMA_BUILD_NUMBER="$APP_VERSION" npm run build
 
 ### Build image
@@ -51,7 +51,7 @@ RUN apt-get update \
 
 WORKDIR /app
 
-COPY . .
+COPY llama.cpp .
 
 COPY --from=web /app/tools/ui/dist tools/ui/dist
 
