@@ -9,7 +9,7 @@ FROM docker.io/node:$NODE_VERSION AS web
 
 ARG APP_VERSION
 
-WORKDIR llama.cpp/app/tools/ui
+WORKDIR /app/tools/ui
 
 COPY llama.cpp/tools/ui/package.json llama.cpp/tools/ui/package-lock.json ./
 RUN npm ci
