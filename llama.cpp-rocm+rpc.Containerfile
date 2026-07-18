@@ -1,15 +1,29 @@
 ARG UBUNTU_VERSION=24.04
 
 # This needs to generally match the container host's environment.
-ARG ROCM_VERSION=7.2.4
-ARG AMDGPU_VERSION=7.2.4
+ARG ROCM_VERSION=7.14.0
+ARG AMDGPU_VERSION=7.14.0
 
 # Target the ROCm build image
-ARG BASE_ROCM_DEV_CONTAINER=rocm/dev-ubuntu-${UBUNTU_VERSION}:${ROCM_VERSION}-complete
+ARG BASE_ROCM_DEV_CONTAINER=docker.io/rocm/dev-ubuntu-${UBUNTU_VERSION}:${ROCM_VERSION}-full
 
 ARG BUILD_DATE=N/A
 ARG APP_VERSION=N/A
 ARG APP_REVISION=N/A
+
+ARG NODE_VERSION=24
+
+FROM docker.io/node:$NODE_VERSION AS web
+
+ARG APP_VERSION
+
+WORKDIR /app/tools/ui
+
+COPY tools/ui/package.json tools/ui/package-lock.json ./
+RUN npm ci
+
+COPY tools/ui/ ./
+RUN LLAMA_BUILD_NUMBER="$APP_VERSION" npm run build
 
 ### Build image
 FROM ${BASE_ROCM_DEV_CONTAINER} AS build
@@ -37,13 +51,14 @@ RUN apt-get update \
 
 WORKDIR /app
 
-COPY llama.cpp/ .
+COPY . .
+
+COPY --from=web /app/tools/ui/dist tools/ui/dist
 
 RUN HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" \
     cmake -S . -B build \
-        -DGGML_HIP=ON -DGGML_RPC=ON -DCMAKE_CXX_FLAGS=-DGGML_MAX_NAME=128 -DCMAKE_C_FLAGS=-DGGML_MAX_NAME=128  \
-        -DGGML_HIP_ROCWMMA_FATTN=OFF \
-        -DGGML_CUDA_FA_ALL_QUANTS=1 \
+        -DGGML_HIP=ON -DGGML_HIP=ON -DGGML_RPC=ON -DCMAKE_CXX_FLAGS=-DGGML_MAX_NAME=128 -DCMAKE_C_FLAGS=-DGGML_MAX_NAME=128 \
+        -DGGML_HIP_ROCWMMA_FATTN=ON -DGGML_CUDA_FA_ALL_QUANTS=1 \
         -DAMDGPU_TARGETS="$ROCM_DOCKER_ARCH" \
         -DGGML_BACKEND_DL=ON -DGGML_CPU_ALL_VARIANTS=ON \
         -DCMAKE_BUILD_TYPE=Release -DLLAMA_BUILD_TESTS=OFF \
@@ -55,12 +70,11 @@ RUN mkdir -p /app/lib \
 RUN mkdir -p /app/full \
     && cp build/bin/* /app/full \
     && cp *.py /app/full \
+    && cp -r conversion /app/full \
     && cp -r gguf-py /app/full \
     && cp -r requirements /app/full \
     && cp requirements.txt /app/full \
-    && cp .devops/tools.sh /app/full/tools.sh \
-    && sed -i '19 a\elif [[ "$arg1" == '\''--rpc'\'' || "$arg1" == '\''-n'\'' ]]; then\n    exec ./rpc-server "$@"' /app/full/tools.sh
-
+    && cp .devops/tools.sh /app/full/tools.sh
 
 ## Base image
 FROM ${BASE_ROCM_DEV_CONTAINER} AS base
@@ -114,7 +128,7 @@ ENTRYPOINT ["/app/tools.sh"]
 ### Light, CLI only
 FROM base AS light
 
-COPY --from=build /app/full/llama-cli /app/full/llama-completion /app
+COPY --from=build /app/full/llama /app/full/llama-cli /app/full/llama-completion /app
 
 WORKDIR /app
 
@@ -125,7 +139,7 @@ FROM base AS server
 
 ENV LLAMA_ARG_HOST=0.0.0.0
 
-COPY --from=build /app/full/llama-server /app
+COPY --from=build /app/full/llama /app/full/llama-server /app
 
 WORKDIR /app
 
