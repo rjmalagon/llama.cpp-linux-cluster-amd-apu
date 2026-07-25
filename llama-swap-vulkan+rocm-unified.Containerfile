@@ -176,6 +176,8 @@ COPY --from=sd-build /install/lib/ /usr/local/lib/
 # Copy llama.cpp binaries (statically linked)
 COPY --from=llama-build /install/bin/llama-server /usr/local/bin/
 COPY --from=llama-build /install/bin/llama-cli /usr/local/bin/
+COPY --from=llama-build /install/bin/llama-perplexity /usr/local/bin/
+COPY --from=llama-build /install/bin/llama-bench /usr/local/bin/
 
 # Copy ik-llama-server (CUDA only; empty copy for vulkan)
 COPY --from=ik-llama-build /install/bin/ /usr/local/bin/
