@@ -51,7 +51,7 @@ elif [ "$BACKEND" = "vulkan" ]; then
     )
 fi
 
-TARGETS=(llama-cli llama-server llama-bench llama-perplexity)
+TARGETS=(llama-cli llama-server llama-bench llama-perplexity llama-tts llama-mtmd-cli)
 
 rm -rf build/CMakeCache.txt build/CMakeFiles 2>/dev/null || true
 
