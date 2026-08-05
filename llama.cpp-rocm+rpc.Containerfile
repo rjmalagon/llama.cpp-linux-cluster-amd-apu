@@ -1,4 +1,4 @@
-ARG UBUNTU_VERSION=24.04
+ARG UBUNTU_VERSION=26.04
 
 # This needs to generally match the container host's environment.
 ARG ROCM_VERSION=7.14.0
