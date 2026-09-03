@@ -1,8 +1,8 @@
 ARG UBUNTU_VERSION=26.04
 
 # This needs to generally match the container host's environment.
-ARG ROCM_VERSION=7.14.0
-ARG AMDGPU_VERSION=7.14.0
+ARG ROCM_VERSION=10.0.0
+ARG AMDGPU_VERSION=10.0.0
 
 # Target the ROCm build image
 ARG BASE_ROCM_DEV_CONTAINER=docker.io/rocm/dev-ubuntu-${UBUNTU_VERSION}:${ROCM_VERSION}-full
