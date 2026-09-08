@@ -58,7 +58,7 @@ COPY --from=web /app/tools/ui/dist tools/ui/dist
 RUN HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" \
     cmake -S . -B build \
         -DGGML_HIP=ON -DGGML_HIP=ON -DGGML_RPC=ON -DCMAKE_CXX_FLAGS=-DGGML_MAX_NAME=128 -DCMAKE_C_FLAGS=-DGGML_MAX_NAME=128 \
-        -DGGML_HIP_ROCWMMA_FATTN=ON -DGGML_CUDA_FA_ALL_QUANTS=1 \
+        -DGGML_CUDA_FA_ALL_QUANTS=1 \
         -DAMDGPU_TARGETS="$ROCM_DOCKER_ARCH" \
         -DGGML_BACKEND_DL=ON -DGGML_CPU_ALL_VARIANTS=ON \
         -DCMAKE_BUILD_TYPE=Release -DLLAMA_BUILD_TESTS=OFF \
