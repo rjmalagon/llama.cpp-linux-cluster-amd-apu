@@ -6,7 +6,7 @@ ARG BASE_ROCM_DEV_CONTAINER=rocm/dev-ubuntu-${UBUNTU_VERSION}:${ROCM_VERSION}-fu
 
 FROM ubuntu:$UBUNTU_VERSION AS build
 
-ARG ROCM_DOCKER_ARCH='gfx908;gfx90a;gfx942;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1150;gfx1200;gfx1201'
+ARG ROCM_DOCKER_ARCH='gfx900;gfx908;gfx90a;gfx942;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1150;gfx1200;gfx1201'
 ENV AMDGPU_TARGETS=${ROCM_DOCKER_ARCH}
 
 # sd-server embeds the web UI at build time, so the build image needs Node/pnpm.
