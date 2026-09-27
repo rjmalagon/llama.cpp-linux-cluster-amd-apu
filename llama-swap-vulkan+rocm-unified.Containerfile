@@ -107,6 +107,7 @@ FROM ik-llama-${BACKEND} AS ik-llama-build
 FROM builder-base AS llama-swap-download
 ARG LS_VERSION=latest
 COPY llama-swap/docker/unified/install-llama-swap.sh /build/
+COPY llama-swap/docker/unified/lib-release.sh /build/
 RUN bash /build/install-llama-swap.sh "${LS_VERSION}"
 
 # ── Runtime bases ─────────────────────────────────────────────────────

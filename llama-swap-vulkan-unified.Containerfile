@@ -77,7 +77,6 @@ FROM builder-base AS llama-build
 ARG BACKEND=cuda
 ARG LLAMA_COMMIT_HASH=master
 COPY scripts/llama-swap/docker/install-llama.sh /build/
-COPY llama-swap/docker/unified/lib-release.sh /build/
 RUN --mount=type=cache,id=ccache-${BACKEND},target=/ccache \
     --mount=type=cache,id=llama-${BACKEND},target=/src/llama.cpp/build \
     BACKEND=${BACKEND} bash /build/install-llama.sh "${LLAMA_COMMIT_HASH}"
@@ -108,6 +107,7 @@ FROM ik-llama-${BACKEND} AS ik-llama-build
 FROM builder-base AS llama-swap-download
 ARG LS_VERSION=latest
 COPY llama-swap/docker/unified/install-llama-swap.sh /build/
+COPY llama-swap/docker/unified/lib-release.sh /build/
 RUN bash /build/install-llama-swap.sh "${LS_VERSION}"
 
 # ── Runtime bases ─────────────────────────────────────────────────────
