@@ -31,7 +31,7 @@ WORKDIR /build
 
 # ──
 
-FROM docker.io/rocm/dev-ubuntu-26.04:10.0.0-full AS builder-base-vulkan
+FROM docker.io/rocm/dev-ubuntu-26.04:10.1.0-full AS builder-base-vulkan
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CCACHE_DIR=/ccache
@@ -128,7 +128,7 @@ COPY --from=builder-base-cuda /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/
 
 # ──
 
-FROM docker.io/rocm/dev-ubuntu-26.04:10.0.0-full AS runtime-vulkan
+FROM docker.io/rocm/dev-ubuntu-26.04:10.1.0-full AS runtime-vulkan
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH="/usr/local/bin:${PATH}"
