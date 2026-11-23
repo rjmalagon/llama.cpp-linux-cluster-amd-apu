@@ -35,7 +35,7 @@ FROM docker.io/rocm/dev-ubuntu-26.04:10.1.0-full AS builder-base-vulkan
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CCACHE_DIR=/ccache
-ENV CCACHE_MAXSIZE=2G
+ENV CCACHE_MAXSIZE=4G
 ENV PATH="/usr/lib/ccache:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -119,7 +119,7 @@ ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
 ENV PATH="/usr/local/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgomp1 python3 curl ca-certificates \
+    libgomp1 python3 git curl ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # CUDA stub drivers for container compatibility
@@ -135,7 +135,7 @@ ENV PATH="/usr/local/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 libvulkan1 mesa-vulkan-drivers \
-    python3 curl ca-certificates libibverbs1 curl ffmpeg\
+    python3 curl ca-certificates libibverbs1 curl git ffmpeg\
     && rm -rf /var/lib/apt/lists/*
 
 # ── Select runtime base by BACKEND ────────────────────────────────────
