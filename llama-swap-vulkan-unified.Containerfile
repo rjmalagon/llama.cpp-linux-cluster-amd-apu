@@ -24,7 +24,7 @@ ENV PATH="/usr/lib/ccache:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential cmake git python3 python3-pip libssl-dev \
-    curl ca-certificates ccache make wget libavcodec-dev \
+    curl ca-certificates ccache make wget libavcodec-dev ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
@@ -135,7 +135,7 @@ ENV PATH="/usr/local/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 libvulkan1 mesa-vulkan-drivers \
-    python3 curl ca-certificates libibverbs1 ffmpeg \
+    python3 curl ca-certificates libibverbs1 libavcodec-dev ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # ── Select runtime base by BACKEND ────────────────────────────────────
