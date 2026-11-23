@@ -24,7 +24,7 @@ ENV PATH="/usr/lib/ccache:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential cmake git python3 python3-pip libssl-dev \
-    curl ca-certificates ccache make wget \
+    curl ca-certificates ccache make wget libavcodec-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
@@ -42,7 +42,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential cmake git python3 python3-pip libssl-dev \
     curl ca-certificates ccache make wget software-properties-common \
     libvulkan-dev glslang-tools spirv-tools vulkan-validationlayers glslc \
-    spirv-headers libibverbs-dev ffmpeg \
+    spirv-headers libibverbs-dev ffmpeg libavcodec-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
