@@ -39,7 +39,7 @@ ENV CCACHE_MAXSIZE=2G
 ENV PATH="/usr/lib/ccache:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential cmake git python3 python3-pip libssl-dev \
+    build-essential cmake git python3 python3-pip xz-utils libssl-dev libxcb-xinput0 libxcb-xinerama0 libxcb-cursor-dev \
     curl ca-certificates ccache make wget software-properties-common \
     libvulkan-dev glslang-tools spirv-tools vulkan-validationlayers glslc \
     spirv-headers libibverbs-dev ffmpeg libavcodec-dev \
@@ -53,7 +53,7 @@ FROM builder-base-${BACKEND} AS builder-base
 
 # ── Build whisper.cpp (fastest build, run first) ──────────────────────
 
-FROM builder-base AS whisper-build
+FROM builder-base-vulkan AS whisper-build
 ARG BACKEND=cuda
 ARG WHISPER_COMMIT_HASH=master
 COPY llama-swap/docker/unified/install-whisper.sh /build/

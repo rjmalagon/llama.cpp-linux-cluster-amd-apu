@@ -39,10 +39,10 @@ ENV CCACHE_MAXSIZE=4G
 ENV PATH="/usr/lib/ccache:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential cmake git python3 python3-pip libssl-dev \
-    curl ca-certificates ccache make wget software-properties-common libgomp1 curl \
-    libvulkan-dev glslang-tools spirv-tools vulkan-validationlayers glslc ffmpeg \
-    spirv-headers libibverbs-dev libavcodec-dev \
+    build-essential cmake git python3 python3-pip xz-utils libssl-dev libxcb-xinput0 libxcb-xinerama0 libxcb-cursor-dev \
+    curl ca-certificates ccache make wget software-properties-common \
+    libvulkan-dev glslang-tools spirv-tools vulkan-validationlayers glslc \
+    spirv-headers libibverbs-dev ffmpeg libavcodec-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
